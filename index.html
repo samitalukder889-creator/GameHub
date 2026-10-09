@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2 Player Games - The Challenge</title>
+    <title>2 Player Games - Pro Arcade</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,49 +11,50 @@
     <div id="splash-screen" class="screen active">
         <div class="splash-box">
             <h1 class="logo-text"><span class="c1">2 PLAYER</span> <span class="c2">GAMES</span></h1>
-            <div class="badge-sub">the CHALLENGE</div>
+            <div class="badge-sub">PRO ARCADE</div>
             <div class="load-track"><div id="load-progress"></div></div>
-            <p id="load-text">45%</p>
+            <p id="load-text">50%</p>
         </div>
     </div>
 
     <!-- Main Dashboard Hub -->
     <div id="hub-screen" class="screen">
         <header class="app-header">
-            <div class="btn-icon" onclick="openSettings()">⚙️</div>
-            <div class="remove-ads">📢 Remove ads</div>
+            <div class="btn-icon" onclick="alert('Settings: Sound & Vibration ON')">⚙️</div>
+            <div class="remove-ads">⭐ Pro Version</div>
             <div class="btn-icon">🇧🇩</div>
         </header>
 
         <div class="games-container">
-            <div class="grid-20">
-                <div class="game-item" onclick="startGame('Tic Tac Toe')"><div class="ico bg-tictac">❌</div><span>Tic Tac Toe</span></div>
-                <div class="game-item" onclick="startGame('Crash It')"><div class="ico bg-crash">🏎️</div><span>Crash It</span><span class="tag hot">HOT</span></div>
-                <div class="game-item" onclick="startGame('Reflex Race')"><div class="ico bg-reflex">🏁</div><span>Reflex Race</span><span class="tag new">NEW!</span></div>
-                <div class="game-item" onclick="startGame('Throw Snow')"><div class="ico bg-snow">⛄</div><span>Throw Snow</span></div>
-                <div class="game-item" onclick="startGame('Yazy Classic')"><div class="ico bg-yazy">🎲</div><span>Yazy Classic</span><span class="tag new">NEW!</span></div>
-                <div class="game-item" onclick="startGame('Cup Pong')"><div class="ico bg-pong">🏓</div><span>Cup Pong</span></div>
-                <div class="game-item" onclick="startGame('Maze Paint')"><div class="ico bg-maze">🎨</div><span>Maze Paint</span><span class="tag p1">1P</span></div>
-                <div class="game-item" onclick="startGame('Fruit Merge')"><div class="ico bg-fruit">🍉</div><span>Fruit Merge</span><span class="tag new">NEW!</span></div>
-                <div class="game-item" onclick="startGame('Wheelie Bike')"><div class="ico bg-bike">🏍️</div><span>Wheelie</span></div>
-                <div class="game-item" onclick="startGame('Snake Battle')"><div class="ico bg-snake">🐍</div><span>Snakes</span><span class="tag new">NEW!</span></div>
-                <div class="game-item" onclick="startGame('Tanks Arena')"><div class="ico bg-tank">🎯</div><span>Tanks</span></div>
-                <div class="game-item" onclick="startGame('Basketball')"><div class="ico bg-basket">🏀</div><span>Basketball</span></div>
-                <div class="game-item" onclick="startGame('Chess Master')"><div class="ico bg-chess">♟️</div><span>Chess</span></div>
-                <div class="game-item" onclick="startGame('Ludo Star')"><div class="ico bg-ludo">🎲</div><span>Ludo</span></div>
-                <div class="game-item" onclick="startGame('Pool Billiards')"><div class="ico bg-pool">🎱</div><span>Pool</span></div>
-                <div class="game-item" onclick="startGame('Hand Slap')"><div class="ico bg-slap">✋</div><span>Hand Slap</span></div>
-                <div class="game-item" onclick="startGame('Memory Match')"><div class="ico bg-memo">🃏</div><span>Memory</span></div>
-                <div class="game-item" onclick="startGame('Knife Thrower')"><div class="ico bg-knife">🔪</div><span>Knife Thrower</span></div>
-                <div class="game-item" onclick="startGame('Mini Golf')"><div class="ico bg-golf">⛳</div><span>Mini Golf</span></div>
-                <div class="game-item" onclick="startGame('Ship Battle')"><div class="ico bg-ship">⛵</div><span>Ship Battle</span></div>
+            <h3 class="section-heading">Select Playable Game</h3>
+            <div class="grid-4">
+                <div class="game-item" onclick="startGame('Tic Tac Toe')">
+                    <div class="ico bg-tictac">❌⭕</div>
+                    <span>Tic Tac Toe</span>
+                    <span class="tag hot">PLAY</span>
+                </div>
+                <div class="game-item" onclick="startGame('Reflex Race')">
+                    <div class="ico bg-reflex">🏁</div>
+                    <span>Reflex Race</span>
+                    <span class="tag new">DUEL</span>
+                </div>
+                <div class="game-item" onclick="startGame('Cup Pong')">
+                    <div class="ico bg-pong">🏓</div>
+                    <span>Cup Pong</span>
+                    <span class="tag hot">POPULAR</span>
+                </div>
+                <div class="game-item" onclick="startGame('Snake Retro')">
+                    <div class="ico bg-snake">🐍</div>
+                    <span>Snake Retro</span>
+                    <span class="tag new">CLASSIC</span>
+                </div>
             </div>
         </div>
 
         <footer class="bottom-footer">
-            <div class="score-circle red" id="global-red">0</div>
-            <button class="tour-btn" onclick="alert('Tournament Mode Activated!')">🏆 PLAY TOURNAMENT</button>
-            <div class="score-circle blue" id="global-blue">0</div>
+            <div class="score-circle red">0</div>
+            <button class="tour-btn" onclick="alert('Tournament Mode Active!')">🏆 PLAY TOURNAMENT</button>
+            <div class="score-circle blue">0</div>
         </footer>
     </div>
 
@@ -61,11 +62,11 @@
     <div id="play-screen" class="screen">
         <div class="play-header">
             <button class="back-btn" onclick="goHome()">⬅ Menu</button>
-            <h2 id="game-title-header">Game View</h2>
+            <h2 id="game-title-header">Game Arena</h2>
             <div style="width:40px;"></div>
         </div>
         <div id="game-board-area">
-            <!-- Dynamic Game Arena -->
+            <!-- Dynamic Game Renders Here -->
         </div>
     </div>
 
