@@ -3,18 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2-Player Game Hub</title>
+    <title>GameHub Pro - Ultimate Arcade</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>2-Player Game Hub</h1>
-        <div class="menu">
-            <button onclick="startGame('tictactoe')">Tic-Tac-Toe</button>
-            <button onclick="startGame('pong')">Pong</button>
+    <!-- Splash / Loading Screen -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-content">
+            <div class="logo-glow">🎮</div>
+            <h1>GAMEHUB PRO</h1>
+            <p>Loading Ultimate Experience...</p>
+            <div class="loader-bar"><div id="loader-fill"></div></div>
+            <span id="loader-text">0%</span>
         </div>
-        <div id="game-container"></div>
     </div>
+
+    <!-- Main Dashboard Hub -->
+    <div id="hub-screen" class="screen">
+        <header class="hub-header">
+            <div class="user-profile">🔥 <span>PRO ARCADE</span></div>
+            <h1>GAME HUB</h1>
+            <div class="icon-btn" onclick="alert('Settings & Audio Enabled')">⚙️</div>
+        </header>
+
+        <div class="banner-slider">
+            <div class="banner-card">
+                <h2>TOURNAMENT LIVE 🏆</h2>
+                <p>Play & Win Daily Rewards!</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">Popular Games</h3>
+        <div class="game-grid">
+            <div class="game-card" onclick="openGame('tictactoe')">
+                <div class="card-img ttt-bg">❌⭕</div>
+                <h3>Tic Tac Toe</h3>
+                <span class="badge">CLASSIC</span>
+            </div>
+            <div class="game-card" onclick="openGame('pong')">
+                <div class="card-img pong-bg">🏓</div>
+                <h3>Pong Arcade</h3>
+                <span class="badge new">HOT</span>
+            </div>
+            <div class="game-card" onclick="openGame('snake')">
+                <div class="card-img snake-bg">🐍</div>
+                <h3>Snake Retro</h3>
+                <span class="badge">RETRO</span>
+            </div>
+            <div class="game-card" onclick="openGame('car')">
+                <div class="card-img car-bg">🏎️</div>
+                <h3>Car Rush</h3>
+                <span class="badge new">NEW</span>
+            </div>
+            <div class="game-card" onclick="openGame('ludo')">
+                <div class="card-img ludo-bg">🎲</div>
+                <h3>Ludo Arena</h3>
+                <span class="badge">BOARD</span>
+            </div>
+            <div class="game-card" onclick="openGame('memory')">
+                <div class="card-img memory-bg">🧠</div>
+                <h3>Memory Flip</h3>
+                <span class="badge">PUZZLE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-Game Play Screen -->
+    <div id="game-screen" class="screen">
+        <div class="game-top-bar">
+            <button class="back-btn" onclick="returnToHub()">⬅ Back</button>
+            <h2 id="current-game-title">Game Play</h2>
+            <div style="width: 50px;"></div>
+        </div>
+        <div id="game-arena">
+            <!-- Dynamic game views load here -->
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
