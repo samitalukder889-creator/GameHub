@@ -1,10 +1,10 @@
 window.addEventListener('load', () => {
-    let val = 45;
+    let val = 50;
     const bar = document.getElementById('load-progress');
     const txt = document.getElementById('load-text');
     
     const t = setInterval(() => {
-        val += 20;
+        val += 25;
         if (val > 100) val = 100;
         bar.style.width = val + '%';
         txt.innerText = val + '%';
@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
                 document.getElementById('hub-screen').classList.add('active');
             }, 250);
         }
-    }, 120);
+    }, 100);
 });
 
 function startGame(name) {
@@ -25,28 +25,29 @@ function startGame(name) {
     document.getElementById('game-title-header').innerText = name;
     
     const board = document.getElementById('game-board-area');
+    board.innerHTML = "";
     
     if (name === 'Tic Tac Toe') {
         renderTicTacToe(board);
     } else if (name === 'Reflex Race') {
         renderReflexRace(board);
-    } else if (name === 'Cup Pong' || name === 'Throw Snow' || name === 'Crash It') {
-        renderTapBattle(board, name);
-    } else {
-        renderGenericGame(board, name);
+    } else if (name === 'Cup Pong') {
+        renderTapDuel(board, 'Cup Pong', '#00cec9');
+    } else if (name === 'Snake Retro') {
+        renderTapDuel(board, 'Snake Retro', '#badc58');
     }
 }
 
-// 1. Tic Tac Toe Game
+// 1. Tic Tac Toe (Playable 2 Player)
 function renderTicTacToe(container) {
     let cells = ['', '', '', '', '', '', '', '', ''];
     let player = 'X';
     let active = true;
 
-    let html = `<div id="status-turn" style="margin-bottom:12px; font-size:16px; font-weight:bold; color:#ff4757;">Player ${player}'s Turn</div>`;
-    html += `<div style="display:grid; grid-template-columns:repeat(3, 90px); grid-template-rows:repeat(3, 90px); gap:8px;">`;
+    let html = `<div id="status-turn" style="margin-bottom:15px; font-size:18px; font-weight:bold; color:#ff4757;">Player ${player}'s Turn</div>`;
+    html += `<div style="display:grid; grid-template-columns:repeat(3, 95px); grid-template-rows:repeat(3, 95px); gap:8px;">`;
     for (let i = 0; i < 9; i++) {
-        html += `<div onclick="clickCell(this, ${i})" style="background:#e4e7eb; border-radius:12px; display:flex; justify-content:center; align-items:center; font-size:36px; font-weight:bold; cursor:pointer;" id="c-${i}"></div>`;
+        html += `<div onclick="clickCell(this, ${i})" style="background:#e4e7eb; border-radius:14px; display:flex; justify-content:center; align-items:center; font-size:40px; font-weight:bold; cursor:pointer;" id="c-${i}"></div>`;
     }
     html += `</div>`;
     container.innerHTML = html;
@@ -87,13 +88,13 @@ function renderTicTacToe(container) {
 function renderReflexRace(container) {
     container.innerHTML = `
         <div style="width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-between; align-items:center;">
-            <div onclick="tapScore('red')" style="width:100%; flex:1; background:#ff4757; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:15px; cursor:pointer; margin-bottom:10px;">
-                <h2 style="font-size:24px;">RED PLAYER</h2>
-                <h1 id="score-red" style="font-size:50px;">0</h1>
+            <div onclick="tapScore('red')" style="width:100%; flex:1; background:#ff4757; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:16px; cursor:pointer; margin-bottom:10px;">
+                <h2 style="font-size:22px;">RED PLAYER</h2>
+                <h1 id="score-red" style="font-size:55px;">0</h1>
             </div>
-            <div onclick="tapScore('blue')" style="width:100%; flex:1; background:#1e90ff; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:15px; cursor:pointer;">
-                <h2 style="font-size:24px;">BLUE PLAYER</h2>
-                <h1 id="score-blue" style="font-size:50px;">0</h1>
+            <div onclick="tapScore('blue')" style="width:100%; flex:1; background:#1e90ff; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:16px; cursor:pointer;">
+                <h2 style="font-size:22px;">BLUE PLAYER</h2>
+                <h1 id="score-blue" style="font-size:55px;">0</h1>
             </div>
         </div>
     `;
@@ -104,36 +105,28 @@ function renderReflexRace(container) {
     }
 }
 
-// 3. Tap Battle for other action games
-function renderTapBattle(container, name) {
+// 3. Action Tap Duel for Cup Pong & Snake
+function renderTapDuel(container, title, color) {
     container.innerHTML = `
-        <div style="text-align:center;">
-            <h3 style="color:#2f3542; margin-bottom:10px;">${name} Dual Arena</h3>
-            <p style="color:#747d8c; font-size:14px; margin-bottom:20px;">Tap rapidly to win the battle!</p>
-            <div style="display:flex; gap:20px;">
-                <button onclick="alert('Red Player Won the Round!')" style="padding:15px 25px; background:#ff4757; color:#fff; border:none; border-radius:12px; font-weight:bold; font-size:16px;">Red Tap 🔴</button>
-                <button onclick="alert('Blue Player Won the Round!')" style="padding:15px 25px; background:#1e90ff; color:#fff; border:none; border-radius:12px; font-weight:bold; font-size:16px;">Blue Tap 🔵</button>
+        <div style="width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-between; align-items:center;">
+            <div onclick="actionTap('red')" style="width:100%; flex:1; background:${color}; color:#2f3542; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:16px; cursor:pointer; margin-bottom:10px; border:4px solid #ff4757;">
+                <h2 style="font-size:20px;">RED (TAP FAST)</h2>
+                <h1 id="act-red" style="font-size:50px;">0</h1>
+            </div>
+            <div onclick="actionTap('blue')" style="width:100%; flex:1; background:${color}; color:#2f3542; display:flex; flex-direction:column; justify-content:center; align-items:center; border-radius:16px; cursor:pointer; border:4px solid #1e90ff;">
+                <h2 style="font-size:20px;">BLUE (TAP FAST)</h2>
+                <h1 id="act-blue" style="font-size:50px;">0</h1>
             </div>
         </div>
     `;
-}
-
-// 4. Generic Fallback for remaining games
-function renderGenericGame(container, name) {
-    container.innerHTML = `
-        <div style="text-align:center;">
-            <h3 style="color:#2f3542; margin-bottom:8px;">${name} Mode</h3>
-            <p style="color:#747d8c; font-size:13px; margin-bottom:15px;">2-Player VS Mode Loaded Successfully!</p>
-            <button onclick="alert('Match Started & Running!')" style="padding:10px 20px; background:#2ed573; color:#fff; border:none; border-radius:10px; font-weight:bold;">Start Match</button>
-        </div>
-    `;
+    let ar = 0, ab = 0;
+    window.actionTap = function(p) {
+        if(p === 'red') { ar++; document.getElementById('act-red').innerText = ar; }
+        else { ab++; document.getElementById('act-blue').innerText = ab; }
+    }
 }
 
 function goHome() {
     document.getElementById('play-screen').classList.remove('active');
     document.getElementById('hub-screen').classList.add('active');
-}
-
-function openSettings() {
-    alert('Settings: Sound ON, Vibration ON');
 }
