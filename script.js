@@ -1,68 +1,94 @@
-// Splash Screen Loading Animation Simulation
 window.addEventListener('load', () => {
-    let progress = 0;
-    const fill = document.getElementById('loader-fill');
-    const text = document.getElementById('loader-text');
+    let val = 45;
+    const bar = document.getElementById('load-progress');
+    const txt = document.getElementById('load-text');
     
-    const interval = setInterval(() => {
-        progress += 5;
-        fill.style.width = progress + '%';
-        text.innerText = progress + '%';
+    const t = setInterval(() => {
+        val += 20;
+        if (val > 100) val = 100;
+        bar.style.width = val + '%';
+        txt.innerText = val + '%';
         
-        if (progress >= 100) {
-            clearInterval(interval);
+        if (val === 100) {
+            clearInterval(t);
             setTimeout(() => {
                 document.getElementById('splash-screen').classList.remove('active');
                 document.getElementById('hub-screen').classList.add('active');
-            }, 300);
+            }, 250);
         }
-    }, 40);
+    }, 120);
 });
 
-function openGame(gameType) {
+function startGame(name) {
     document.getElementById('hub-screen').classList.remove('active');
-    document.getElementById('game-screen').classList.add('active');
+    document.getElementById('play-screen').classList.add('active');
+    document.getElementById('game-title-header').innerText = name;
     
-    const title = document.getElementById('current-game-title');
-    const arena = document.getElementById('game-arena');
-    arena.innerHTML = "";
-
-    if (gameType === 'tictactoe') {
-        title.innerText = "Tic Tac Toe (Player vs Player)";
-        setupTicTacToe(arena);
-    } else if (gameType === 'pong') {
-        title.innerText = "Pong Arcade";
-        arena.innerHTML = `<h3 style="color:#00ffcc; margin-bottom:10px;">Pong Retro Arena</h3><p style="color:#aaa; font-size:13px; text-align:center; margin-bottom:15px;">Fast-paced table tennis action.</p><button onclick="alert('Starting Pong Match!')" style="padding:10px 20px; background:#00c6ff; border:none; border-radius:8px; font-weight:bold; color:#fff;">Start Game</button>`;
-    } else if (gameType === 'snake') {
-        title.innerText = "Snake Retro";
-        arena.innerHTML = `<h3 style="color:#38ef7d; margin-bottom:10px;">Classic Snake Game</h3><p style="color:#aaa; font-size:13px; text-align:center; margin-bottom:15px;">Eat food and grow longer without crashing!</p><button onclick="alert('Snake Game Initialized!')" style="padding:10px 20px; background:#38ef7d; border:none; border-radius:8px; font-weight:bold; color:#000;">Play Snake</button>`;
-    } else if (gameType === 'car') {
-        title.innerText = "Car Rush";
-        arena.innerHTML = `<h3 style="color:#eb3349; margin-bottom:10px;">High Speed Racing</h3><p style="color:#aaa; font-size:13px; text-align:center; margin-bottom:15px;">Dodge traffic and set high scores!</p><button onclick="alert('Engine Started!')" style="padding:10px 20px; background:#eb3349; border:none; border-radius:8px; font-weight:bold; color:#fff;">Race Now</button>`;
-    } else if (gameType === 'ludo') {
-        title.innerText = "Ludo Arena";
-        arena.innerHTML = `<h3 style="color:#fcb045; margin-bottom:10px;">Mini Ludo Board</h3><p style="color:#aaa; font-size:13px; text-align:center; margin-bottom:15px;">Roll the dice and race your tokens home!</p><button onclick="alert('Rolling Dice... 6!')" style="padding:10px 20px; background:#fcb045; border:none; border-radius:8px; font-weight:bold; color:#000;">Roll Dice</button>`;
+    const board = document.getElementById('game-board-area');
+    
+    if (name === 'Tic Tac Toe') {
+        renderTicTacToe(board);
     } else {
-        title.innerText = "Memory Flip";
-        arena.innerHTML = `<h3 style="color:#8f94fb; margin-bottom:10px;">Brain Puzzle</h3><p style="color:#aaa; font-size:13px; text-align:center; margin-bottom:15px;">Match the pairs to win!</p><button onclick="alert('Puzzle Started!')" style="padding:10px 20px; background:#8f94fb; border:none; border-radius:8px; font-weight:bold; color:#fff;">Start Puzzle</button>`;
+        board.innerHTML = `
+            <div style="text-align:center;">
+                <h3 style="color:#2f3542; margin-bottom:8px;">${name} Arena</h3>
+                <p style="color:#747d8c; font-size:13px; margin-bottom:15px;">2-Player Challenge Mode Ready!</p>
+                <button onclick="alert('Match Started!')" style="padding:10px 20px; background:#2ed573; color:#fff; border:none; border-radius:10px; font-weight:bold;">Start Match</button>
+            </div>
+        `;
     }
 }
 
-function setupTicTacToe(container) {
-    let board = ['', '', '', '', '', '', '', '', ''];
-    let currentPlayer = 'X';
+function renderTicTacToe(container) {
+    let cells = ['', '', '', '', '', '', '', '', ''];
+    let player = 'X';
     let active = true;
 
-    let html = `<div style="margin-bottom:10px; font-size:14px; color:#ff3366;">Player Turn: <span id="turn-indicator">X</span></div>`;
-    html += `<div class="ttt-board">`;
+    let html = `<div id="status-turn" style="margin-bottom:12px; font-size:15px; font-weight:bold; color:#ff4757;">Player ${player}'s Turn</div>`;
+    html += `<div style="display:grid; grid-template-columns:repeat(3, 80px); grid-template-rows:repeat(3, 80px); gap:6px;">`;
     for (let i = 0; i < 9; i++) {
-        html += `<div class="ttt-cell" onclick="makeMove(this, ${i})" id="cell-${i}"></div>`;
+        html += `<div onclick="clickCell(this, ${i})" style="background:#e4e7eb; border-radius:10px; display:flex; justify-content:center; align-items:center; font-size:32px; font-weight:bold; cursor:pointer;" id="c-${i}"></div>`;
     }
-    html += `</div><button onclick="openGame('tictactoe')" style="margin-top:15px; padding:6px 12px; background:#333; color:#fff; border:none; border-radius:6px; font-size:12px;">Reset Board</button>`;
+    html += `</div>`;
     container.innerHTML = html;
+
+    window.clickCell = function(el, idx) {
+        if (!active || cells[idx] !== '') return;
+        cells[idx] = player;
+        el.innerText = player;
+        el.style.color = player === 'X' ? '#ff4757' : '#1e90ff';
+
+        const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        let won = false;
+        for (let w of wins) {
+            if (cells[w[0]] && cells[w[0]] === cells[w[1]] && cells[w[0]] === cells[w[2]]) {
+                won = true;
+                break;
+            }
+        }
+
+        if (won) {
+            document.getElementById('status-turn').innerHTML = `🎉 Player ${player} Wins!`;
+            active = false;
+            return;
+        }
+
+        if (!cells.includes('')) {
+            document.getElementById('status-turn').innerHTML = `🤝 Match Draw!`;
+            active = false;
+            return;
+        }
+
+        player = player === 'X' ? 'O' : 'X';
+        document.getElementById('status-turn').innerHTML = `Player ${player}'s Turn`;
+    };
 }
 
-function returnToHub() {
-    document.getElementById('game-screen').classList.remove('active');
+function goHome() {
+    document.getElementById('play-screen').classList.remove('active');
     document.getElementById('hub-screen').classList.add('active');
+}
+
+function openSettings() {
+    alert('Settings: Sound ON, Vibration ON');
 }
