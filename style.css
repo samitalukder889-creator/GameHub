@@ -1,27 +1,273 @@
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background: #121212;
+    font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+    user-select: none;
+}
+
+body {
+    background: #0d0e15;
     color: #ffffff;
-    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #0d0e15;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Splash Screen Style */
+#splash-screen {
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    z-index: 999;
+}
+
+.splash-content {
+    text-align: center;
+}
+
+.logo-glow {
+    font-size: 70px;
+    animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+.splash-content h1 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 10px 0;
+    color: #ffd700;
+}
+
+.splash-content p {
+    color: #ddd;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.loader-bar {
+    width: 200px;
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto 8px auto;
+}
+
+#loader-fill {
+    width: 0%;
+    height: 100%;
+    background: #00ffcc;
+    transition: width 0.1s linear;
+}
+
+#loader-text {
+    font-size: 12px;
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+/* Hub Header */
+.hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-profile {
+    background: #1e1e2d;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #ff3366;
+    border: 1px solid #ff3366;
+}
+
+.hub-header h1 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #00ffcc;
+}
+
+.icon-btn {
+    background: #1e1e2d;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Banner */
+.banner-slider {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(255, 65, 108, 0.3);
+}
+
+.banner-card h2 {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.banner-card p {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #aaa;
+}
+
+/* Game Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    flex-grow: 1;
+}
+
+.game-card {
+    background: #161722;
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #252636;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform 0.1s ease;
+}
+
+.game-card:active {
+    transform: scale(0.95);
+}
+
+.card-img {
+    width: 100%;
+    height: 80px;
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    font-size: 32px;
+    margin-bottom: 10px;
 }
-#app {
+
+.ttt-bg { background: linear-gradient(135deg, #f7971e, #ffd200); }
+.pong-bg { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+.snake-bg { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.car-bg { background: linear-gradient(135deg, #eb3349, #f45c43); }
+.ludo-bg { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+.memory-bg { background: linear-gradient(135deg, #4e54c8, #8f94fb); }
+
+.game-card h3 {
+    font-size: 13px;
+    font-weight: 600;
     text-align: center;
 }
-.menu button {
-    background: #ff9800;
-    border: none;
-    padding: 15px 30px;
-    margin: 10px;
-    font-size: 18px;
+
+.badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #333;
+    font-size: 8px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.badge.new {
+    background: #ff0055;
+}
+
+/* In-Game UI */
+.game-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.back-btn {
+    background: #252636;
     color: white;
+    border: none;
+    padding: 8px 14px;
     border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
     cursor: pointer;
 }
-.menu button:hover {
-    background: #e68900;
+
+#current-game-title {
+    font-size: 16px;
+    color: #ffd700;
+    font-weight: 700;
+}
+
+#game-arena {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #161722;
+    border-radius: 16px;
+    padding: 15px;
+    border: 1px solid #252636;
+}
+
+/* Tic Tac Toe Grid Style */
+.ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 6px;
+}
+
+.ttt-cell {
+    background: #202231;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #00ffcc;
 }
